@@ -1,0 +1,15 @@
+{
+  "name": "node-sanity-check",
+  "version": "0.1.0",
+  "description": "Purpose of this is just to see if I can use docker with a language I'm familiar with.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "frazier mork",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.15.3"
+  }
+}
