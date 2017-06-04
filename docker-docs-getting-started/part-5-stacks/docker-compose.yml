@@ -1,0 +1,45 @@
+version: "3"
+services:
+    web:
+        image: fraziermork/tutorials:friendlyhello
+        deploy:
+            replicas: 5
+            resources:
+                limits:
+                    cpus: "0.1"
+                    memory: 50M
+            restart_policy:
+                condition: on-failure
+        ports:
+            - "80:80"
+        networks:
+            - webnet
+
+    # See this by going a url listed by `docker-machine ls` at port 8080 in a browser
+    visualizer:
+        image: dockersamples/visualizer:stable
+        ports:
+            - "8080:8080"
+        volumes:
+            - "/var/run/docker.sock:/var/run/docker.sock"
+        deploy:
+            placement:
+                # Ensure that this only ever runs on a manager node, never a worker node
+                constraints: [node.role == manager]
+        networks:
+            - webnet
+
+    #
+    redis:
+        image: redis
+        ports:
+            - "6379:6379"
+        volumes:
+            - "./data:/data"
+        deploy:
+            placement:
+                constraints: [node.role == manager]
+        networks:
+            - webnet
+networks:
+    webnet:
